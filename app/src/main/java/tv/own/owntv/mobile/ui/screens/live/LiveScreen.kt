@@ -82,6 +82,7 @@ import tv.own.owntv.core.database.entity.ChannelEntity
 import tv.own.owntv.core.epg.displayLogoUrl
 import tv.own.owntv.core.categorylock.SealedCategoryAction
 import tv.own.owntv.core.live.LiveKey
+import tv.own.owntv.core.live.hasFixedOrder
 import tv.own.owntv.mobile.R
 import tv.own.owntv.mobile.ui.screens.home.groupedCountText
 import tv.own.owntv.mobile.ui.components.ChannelLogoImage
@@ -253,12 +254,20 @@ fun LiveScreen(
                     inline = true,
                     modifier = Modifier.weight(1f),
                 )
+                // Favorites and History keep their own order: the sort reads "Newest first" there and
+                // cannot be changed; the stored choice still applies to every other list.
+                val fixedOrder = selected.hasFixedOrder
                 StageTool(
                     onClick = vm::toggleSort,
                     icon = MobileIcons.Sort,
                     label = stringResource(
-                        if (sort == SettingsRepository.SortMode.ALPHA) R.string.settings_sort_alpha else R.string.content_epg_sort_provider,
+                        when {
+                            fixedOrder -> R.string.content_newest_first
+                            sort == SettingsRepository.SortMode.ALPHA -> R.string.settings_sort_alpha
+                            else -> R.string.content_epg_sort_provider
+                        },
                     ),
+                    enabled = !fixedOrder,
                 )
                 StageTool(
                     onClick = vm::toggleLiveView,
