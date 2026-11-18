@@ -7,6 +7,12 @@
 > Issue numbers that are part of a title are fine; explanatory parentheticals are not. The detail —
 > what, why, files and verification — belongs in the commit message, never here.
 
+## v1.1.3 — unreleased
+
+### 🐛 Fixes
+- **📺 Live TV: a channel that stops playing in the preview says why, instead of freezing on its last picture**
+- **📶 Live TV: after the network drops, a channel comes back by itself once the provider lets go of the old connection**
+
 ## v1.1.2 — 2026-11-09
 
 ### New features
