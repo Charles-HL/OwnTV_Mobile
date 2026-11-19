@@ -55,7 +55,6 @@ import tv.own.owntv.core.sports.GuideSportItem
 import tv.own.owntv.core.sports.MatchNotifications
 import tv.own.owntv.core.sports.WatchOption
 import tv.own.owntv.core.sports.model.Match
-import tv.own.owntv.core.sports.model.MatchState
 import tv.own.owntv.mobile.R
 import tv.own.owntv.mobile.ui.components.ChannelLogoImage
 import tv.own.owntv.mobile.ui.components.MobileIcons
@@ -269,7 +268,7 @@ private fun ScoresTab(
     val today = state.board.today.values.flatten().distinctBy { it.key }.filter { it.isLive || isToday(it.startMs) }
     val live = today.filter { it.isLive && filter.passes(it) }
         .sortedWith(compareBy<Match>({ config.rankOf(it.sport, it.feed).first }, { config.rankOf(it.sport, it.feed).second }, { !filter.isMine(it) }, { it.startMs }))
-    val soon = state.board.matches.filter { it.state == MatchState.PRE && it.startMs > now && filter.passes(it) }
+    val soon = state.board.startingSoon(now, filter::passes)
         .sortedWith(compareBy<Match>({ config.rankOf(it.sport, it.feed).first }, { config.rankOf(it.sport, it.feed).second }, { it.startMs })).take(12)
     val onNow = state.onNow.values.flatten().take(6)
     val context = LocalContext.current

@@ -20,7 +20,7 @@ A fresh install walks you through the same steps as the television:
 Welcome  →  Display  →  Disclaimer  →  Set up OwnTV  →  Profile  →  Add a playlist  →  Import  →  All set
 ```
 
-1. **Welcome** — the language picker is on this screen: one of 26, or **System default**. Tap
+1. **Welcome** — the language picker is on this screen: one of 28, or **System default**. Tap
    **Get started**.
 2. **Display** — interface zoom and font size, with a sample that resizes as you adjust, the
    **App icon**, and whether Live TV shows a preview.
@@ -103,6 +103,9 @@ it to unlock. Back only shows it too. The volume keys and the next-episode card 
   you switch tab. **⟳** at the end rebuilds the sports data (the status pill says **Rebuilding
   sports…**). Opening Sports from the bottom bar starts on Scores.
 - **Scores** — **Live now**, **Sport on your channels** (from your guide) and **Starting soon**.
+  Tables show each sport's own columns (OTL for hockey, PCT and GB for basketball and baseball), and
+  outside football the tabs read **Standings** and **Games**. College teams are found in **My teams**,
+  labelled with their league.
   Tap a match to open it; **long-press** for the sheet: tap a team's name for its team page, **Follow**
   on the right, and **Remind me**.
 - **Calendar** — the month on top, the chosen day's matches below, grouped by league. Each day shows
@@ -157,6 +160,9 @@ A name another playlist already has gets a number, so two unnamed playlists are 
 **My IPTV 2**.
 Under **User-Agent** there is an optional **Referer** — leave it empty unless your provider asks
 for one; it is then sent with every stream of that playlist.
+An Xtream playlist has **Prefer HLS for Live TV** and **Prefer HLS for catch-up**. The catch-up one is off
+by default: many providers serve catch-up only as MPEG-TS, and a programme that will not open as HLS
+is asked for as MPEG-TS by itself.
 
 ### 📱 Setting up the television too?
 **Where:** on the **TV** — Settings → Sources & guide → Playlists → Add Source → **Remote**

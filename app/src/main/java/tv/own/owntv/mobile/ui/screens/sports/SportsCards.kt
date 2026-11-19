@@ -174,7 +174,7 @@ internal fun FollowRemindSheet(
             subtitle = leagueName(match) + stringResource(R.string.content_epg_bits_separator) + kickOffText(match.startMs),
         )
         match.competitors.forEach { c ->
-            val team = FollowedTeam(match.sport, c.team.id, c.team.name, c.team.abbreviation)
+            val team = FollowedTeam(match.sport, c.team.id, c.team.name, c.team.abbreviation, tv.own.owntv.core.sports.model.League.keyOf(match.sport, match.leagueSlug))
             val following = config.teams.any { it.key == team.key }
             val ref = teamRefOf(match, c.team)
             Row(Modifier.fillMaxWidth().height(52.dp).padding(end = 6.dp), verticalAlignment = Alignment.CenterVertically) {

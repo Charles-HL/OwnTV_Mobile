@@ -42,6 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import tv.own.owntv.core.sports.MatchAlertHost
 import tv.own.owntv.core.sports.MinQuality
+import tv.own.owntv.core.sports.StandingsColumn
 import tv.own.owntv.core.sports.WatchFilter
 import tv.own.owntv.core.sports.WatchOption
 import tv.own.owntv.core.sports.WatchTier
@@ -153,7 +154,7 @@ fun SportsMatchScreen(
         }
         item(key = "tabs") {
             LazyRow(Modifier.padding(top = 12.dp, bottom = 6.dp), contentPadding = PaddingValues(horizontal = 14.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                items(tabs) { t -> StageTool(onClick = { tab = t }, label = stringResource(t.label), on = tab == t) }
+                items(tabs) { t -> StageTool(onClick = { tab = t }, label = stringResource(t.label(m.sport)), on = tab == t) }
             }
         }
         when (tab) {
@@ -183,12 +184,12 @@ fun SportsMatchScreen(
     }
 }
 
-private val MatchTab.label: Int get() = when (this) {
+private fun MatchTab.label(sport: Sport): Int = when (this) {
     MatchTab.WATCH -> R.string.sports_watch_live
     MatchTab.TIMELINE -> R.string.sports_tab_timeline
     MatchTab.STATS -> R.string.sports_tab_stats
     MatchTab.LINEUPS -> R.string.sports_tab_lineups
-    MatchTab.TABLE -> R.string.sports_tab_table
+    MatchTab.TABLE -> if (sport == Sport.SOCCER) R.string.sports_tab_table else R.string.sports_tab_standings
     MatchTab.FORM -> R.string.sports_table_form
     MatchTab.BROADCASTS -> R.string.sports_tab_broadcasts
 }
@@ -566,22 +567,35 @@ private fun BroadcastGroup(country: String, names: List<String>) {
 private fun TablePreview(table: StandingsTable?, m: Match, onOpenLeague: () -> Unit) {
     val group = table?.groups?.firstOrNull { g -> g.rows.any { r -> m.competitors.any { it.team.id == r.team.id } } } ?: table?.groups?.firstOrNull() ?: return
     Column(Modifier.fillMaxWidth().padding(horizontal = 8.dp).clip(RoundedCornerShape(16.dp)).clickable(onClick = onOpenLeague).padding(6.dp)) {
-        StandingsHeader()
-        group.rows.forEach { row -> StandingsLine(row, highlight = m.competitors.any { it.team.id == row.team.id }) }
+        StandingsHeader(m.sport)
+        group.rows.forEach { row -> StandingsLine(row, m.sport, highlight = m.competitors.any { it.team.id == row.team.id }) }
     }
 }
 
-/** `# Team P W D L GD Pts`. */
+private val StandingsColumn.label: Int get() = when (this) {
+    StandingsColumn.PLAYED -> R.string.sports_table_played
+    StandingsColumn.WON -> R.string.sports_table_won
+    StandingsColumn.DRAWN -> R.string.sports_table_drawn
+    StandingsColumn.TIED -> R.string.sports_table_tied
+    StandingsColumn.LOST -> R.string.sports_table_lost
+    StandingsColumn.OT_LOSSES -> R.string.sports_table_ot_losses
+    StandingsColumn.DIFFERENCE -> R.string.sports_table_difference
+    StandingsColumn.WIN_PERCENT -> R.string.sports_table_win_percent
+    StandingsColumn.GAMES_BEHIND -> R.string.sports_table_games_behind
+    StandingsColumn.POINTS -> R.string.sports_table_points
+}
+
+/** ".750" and "11.5" need more room than a count. */
+private val StandingsColumn.width get() = if (this == StandingsColumn.WIN_PERCENT || this == StandingsColumn.GAMES_BEHIND) WideColumn else NumberColumn
+
+/** `# Team` and [sport]'s own columns (football: `P W D L GD Pts`). */
 @Composable
-internal fun StandingsHeader() {
+internal fun StandingsHeader(sport: Sport?) {
     val palette = LocalStagePalette.current
     Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
         Text("#", style = stageText(11f, 700), color = palette.dim, modifier = Modifier.width(24.dp))
         Text(stringResource(R.string.sports_table_team), style = stageText(11f, 700), color = palette.dim, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
-        listOf(
-            R.string.sports_table_played, R.string.sports_table_won, R.string.sports_table_drawn,
-            R.string.sports_table_lost, R.string.sports_table_difference, R.string.sports_table_points,
-        ).forEach { Text(stringResource(it), style = stageText(11f, 700), color = palette.dim, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.End, modifier = Modifier.width(NumberColumn)) }
+        StandingsColumn.of(sport).forEach { Text(stringResource(it.label), style = stageText(11f, 700), color = palette.dim, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.End, modifier = Modifier.width(it.width)) }
     }
 }
 
@@ -590,7 +604,7 @@ internal fun StandingsHeader() {
  * My teams. A tap opens the team's page where it has one ([onClick]).
  */
 @Composable
-internal fun StandingsLine(row: StandingsRow, highlight: Boolean, star: Boolean = false, onClick: (() -> Unit)? = null) {
+internal fun StandingsLine(row: StandingsRow, sport: Sport?, highlight: Boolean, star: Boolean = false, onClick: (() -> Unit)? = null) {
     val palette = LocalStagePalette.current
     Row(
         Modifier.fillMaxWidth()
@@ -606,11 +620,14 @@ internal fun StandingsLine(row: StandingsRow, highlight: Boolean, star: Boolean 
             Text(row.team.shortName, style = stageText(12.5f, if (highlight) 800 else 600), color = palette.text, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f, fill = false))
             if (star) Text("★", style = stageText(12f, 700), color = StarYellow, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
-        listOf(row.played.toString(), row.won.toString(), row.drawn.toString(), row.lost.toString(), row.difference, row.points.toString()).forEachIndexed { i, v ->
-            Text(v, style = stageText(12.5f, if (i == 5) 800 else 500), color = if (i == 5) palette.text else palette.body, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.End, modifier = Modifier.width(NumberColumn))
+        val main = StandingsColumn.main(sport)
+        StandingsColumn.of(sport).forEach { c ->
+            val bold = c == main
+            Text(c.valueOf(row), style = stageText(12.5f, if (bold) 800 else 500), color = if (bold) palette.text else palette.body, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.End, modifier = Modifier.width(c.width))
         }
     }
 }
 
 /** The number columns of a table, each 26 wide — six fit beside the team on a phone. */
 private val NumberColumn = 26.dp
+private val WideColumn = 36.dp

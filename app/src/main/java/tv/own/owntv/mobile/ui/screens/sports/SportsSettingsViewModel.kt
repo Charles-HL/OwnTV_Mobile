@@ -21,6 +21,7 @@ import tv.own.owntv.core.sports.SportsMemory
 import tv.own.owntv.core.sports.SportsRepository
 import tv.own.owntv.core.sports.SportsSource
 import tv.own.owntv.core.sports.SportsSuggestion
+import tv.own.owntv.core.sports.SportsTeamSearch
 import tv.own.owntv.core.sports.model.Sport
 import tv.own.owntv.core.sports.model.Team
 import java.util.Locale
@@ -59,13 +60,14 @@ class SportsSettingsViewModel(
     }
 
     /**
-     * A followed team's page, which knows its sport but not its league: the followed league whose table on
-     * the board lists it, else the sport's first followed league, else its first league.
+     * A followed team's page: the league it was followed from; for a team saved without one, the followed
+     * league whose table on the board lists it, else the sport's first followed league, else its first league.
      */
     fun teamRefFor(team: FollowedTeam): TeamRef? {
         val board = repository.board.value
         val leagues = config.value.followedLeagues().mapNotNull(SportsCatalog::league).filter { it.sport == team.sport }
-        val league = leagues.firstOrNull { l -> board.standings[l.key]?.groups?.any { g -> g.rows.any { it.team.id == team.id } } == true }
+        val league = team.league?.let(SportsCatalog::league)
+            ?: leagues.firstOrNull { l -> board.standings[l.key]?.groups?.any { g -> g.rows.any { it.team.id == team.id } } == true }
             ?: leagues.firstOrNull() ?: SportsCatalog.leaguesOf(team.sport).firstOrNull() ?: return null
         return teamRefOf(league, Team(team.id, team.name, abbreviation = team.abbreviation))
     }
@@ -94,19 +96,8 @@ class SportsSettingsViewModel(
 
     fun suggestions(c: SportsConfig): List<SportsSuggestion> = SportsMemory.suggestions(c, c.followedLeagues())
 
-    /** Teams of the followed leagues, fetched once per page visit, for the My teams search. */
-    private var teamIndex: List<Pair<FollowedTeam, String>>? = null
+    /** The My teams search; its team lists are fetched once per page visit. */
+    private val teamSearch = SportsTeamSearch(source)
 
-    suspend fun searchTeams(query: String): List<FollowedTeam> {
-        if (query.trim().length < 2) return emptyList()
-        val index = teamIndex ?: buildList {
-            for (key in config.value.followedLeagues()) {
-                val league = SportsCatalog.league(key) ?: continue
-                val teams: List<Team> = runCatching { source.teams(league) }.getOrDefault(emptyList())
-                teams.forEach { t -> add(FollowedTeam(league.sport, t.id, t.name, t.abbreviation) to t.name) }
-            }
-        }.distinctBy { it.first.key }.also { teamIndex = it }
-        val q = query.trim().lowercase()
-        return index.filter { (_, name) -> name.lowercase().contains(q) }.map { it.first }.take(30)
-    }
+    suspend fun searchTeams(query: String): List<FollowedTeam> = teamSearch.search(config.value, query)
 }

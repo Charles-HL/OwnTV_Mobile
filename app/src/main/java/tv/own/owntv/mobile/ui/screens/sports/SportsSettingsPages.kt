@@ -384,7 +384,7 @@ fun SportsTeamsPage(vm: SportsSettingsViewModel = koinViewModel()) {
         }
         found.forEach { t ->
             item(key = "f-" + t.key) {
-                StageSettingRow(t.name, icon = MobileIcons.Star, subtitle = sportLabel(t.sport), onClick = { vm.toggleTeam(t) }) { StageSwitch(c.teams.any { it.key == t.key }) }
+                StageSettingRow(t.name, icon = MobileIcons.Star, subtitle = t.leagueName ?: sportLabel(t.sport), onClick = { vm.toggleTeam(t) }) { StageSwitch(c.teams.any { it.key == t.key }) }
             }
         }
         if (c.teams.isNotEmpty()) {
@@ -393,9 +393,9 @@ fun SportsTeamsPage(vm: SportsSettingsViewModel = koinViewModel()) {
                 item(key = "m-" + t.key) {
                     val ref = remember(t, c) { vm.teamRefFor(t) }
                     if (ref == null) {
-                        StageSettingRow(t.name, icon = MobileIcons.Star, subtitle = sportLabel(t.sport), onClick = { vm.toggleTeam(t) }) { StageSwitch(true) }
+                        StageSettingRow(t.name, icon = MobileIcons.Star, subtitle = t.leagueName ?: sportLabel(t.sport), onClick = { vm.toggleTeam(t) }) { StageSwitch(true) }
                     } else {
-                        StageSettingRow(t.name, icon = MobileIcons.Star, subtitle = sportLabel(t.sport), onClick = { nav(sportsTeamRoute(ref)) }) {
+                        StageSettingRow(t.name, icon = MobileIcons.Star, subtitle = t.leagueName ?: sportLabel(t.sport), onClick = { nav(sportsTeamRoute(ref)) }) {
                             StageTool(onClick = { vm.toggleTeam(t) }, label = stringResource(R.string.sports_following), icon = MobileIcons.Star, on = true)
                         }
                     }

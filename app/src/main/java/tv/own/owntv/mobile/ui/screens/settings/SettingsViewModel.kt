@@ -256,6 +256,7 @@ class SettingsViewModel(
         syncMovies: Boolean = true,
         syncSeries: Boolean = true,
         preferHls: Boolean = false,
+        catchupPreferHls: Boolean = false,
     ) {
         viewModelScope.launch {
             val existing = sourceDao.getById(id) ?: return@launch
@@ -278,6 +279,7 @@ class SettingsViewModel(
                 syncMovies = syncMovies,
                 syncSeries = syncSeries,
                 preferHls = preferHls,
+                catchupPreferHls = catchupPreferHls,
             )
             sourceEditor.save(existing, updated)
             settings.setPlaylistAutoRefresh(id, autoRefresh)

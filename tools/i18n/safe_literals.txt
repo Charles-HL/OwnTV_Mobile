@@ -164,6 +164,8 @@
 1	uri	app/src/main/java/tv/own/owntv/mobile/ui/screens/MoreLeaf.kt	localsync
 1	uri	app/src/main/java/tv/own/owntv/mobile/ui/screens/MoreLeaf.kt	more/$slug
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/MoreScreen.kt	Rebuild Now Trending
+1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/MoreScreen.kt	dMMM
+1	locale	app/src/main/java/tv/own/owntv/mobile/ui/screens/MoreScreen.kt	en
 1	empty	app/src/main/java/tv/own/owntv/mobile/ui/screens/downloads/DownloadsScreen.kt	\0
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/downloads/DownloadsScreen.kt	
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/downloads/DownloadsScreen.kt	
@@ -799,6 +801,8 @@
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	#
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	$it ${dateText(localDate(e.main.startMs), locale, "EEE")} ${timeText(e.main.startMs)}
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	$sep$it $pts
+1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	${r.points} $pts
+1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	${r.won}–${r.lost}
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	${sportEmoji(card.league.sport)} ${sportLabel(card.league.sport)}
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	${top.won}–${top.lost}
 2	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	EEE
@@ -819,7 +823,7 @@
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	w:$heading
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	—
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	−${-gap}
-1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	★ ${r.team.shortName}$sep#${r.rank}$sep${r.points} $pts
+1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	★ ${r.team.shortName}$sep#${r.rank}$sep$figure
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	🏁
 2	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	🏆
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsLeaguesTab.kt	🏆 $winner
@@ -937,8 +941,10 @@
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsSettingsPages.kt	what
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsSettingsPages.kt	while
 1	empty	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsTeamScreen.kt	\0
-1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsTeamScreen.kt	#${r.rank}$sep${r.points} ${stringResource(R.string.sports_table_points)}
+1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsTeamScreen.kt	#${r.rank}$sep
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsTeamScreen.kt	${month.year}
+1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsTeamScreen.kt	${r.points} ${stringResource(R.string.sports_table_points)}
+1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsTeamScreen.kt	${r.won}–${r.lost}
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsTeamScreen.kt	EEEd
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsTeamScreen.kt	failed
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/screens/sports/SportsTeamScreen.kt	form
@@ -954,6 +960,7 @@
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/setup/AddSourceForm.kt	dev2
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/setup/AddSourceForm.kt	file
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/setup/AddSourceForm.kt	hls
+1	technical	app/src/main/java/tv/own/owntv/mobile/ui/setup/AddSourceForm.kt	hls-catchup
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/setup/AddSourceForm.kt	identity
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/setup/AddSourceForm.kt	kind
 1	technical	app/src/main/java/tv/own/owntv/mobile/ui/setup/AddSourceForm.kt	mac

@@ -81,9 +81,10 @@ private fun panesOf(league: League): List<LeaguePane> = when {
     else -> listOf(LeaguePane.FIXTURES, LeaguePane.RESULTS)
 }
 
-private val LeaguePane.label: Int get() = when (this) {
-    LeaguePane.TABLE -> R.string.sports_tab_table
-    LeaguePane.FIXTURES -> R.string.sports_tab_fixtures
+/** Football keeps "Table" and "Fixtures"; other sports say "Standings" and "Games". */
+private fun LeaguePane.label(sport: Sport): Int = when (this) {
+    LeaguePane.TABLE -> if (sport == Sport.SOCCER) R.string.sports_tab_table else R.string.sports_tab_standings
+    LeaguePane.FIXTURES -> if (sport == Sport.SOCCER) R.string.sports_tab_fixtures else R.string.sports_tab_games
     LeaguePane.RESULTS -> R.string.sports_tab_results
     LeaguePane.DRIVERS -> R.string.sports_tab_drivers
     LeaguePane.CONSTRUCTORS -> R.string.sports_tab_constructors
@@ -194,21 +195,21 @@ internal fun SportsLeaguesTab(
         }
         item(key = "panes") {
             LazyRow(Modifier.padding(top = 12.dp, bottom = 6.dp), contentPadding = PaddingValues(horizontal = 14.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                items(panes.size) { i -> StageTool(onClick = { vm.setLeagueTab(league.key, i) }, label = stringResource(panes[i].label), on = panes[i] == pane) }
+                items(panes.size) { i -> StageTool(onClick = { vm.setLeagueTab(league.key, i) }, label = stringResource(panes[i].label(league.sport)), on = panes[i] == pane) }
             }
         }
         if (view == null) return@SportsTabPage
         val myTeamIds = config.teams.filter { it.sport == league.sport }.map { it.id }.toSet()
         when (pane) {
             LeaguePane.TABLE -> {
-                item(key = "tableHead") { Box(Modifier.padding(horizontal = 8.dp)) { StandingsHeader() } }
+                item(key = "tableHead") { Box(Modifier.padding(horizontal = 8.dp)) { StandingsHeader(league.sport) } }
                 val groups = view.board.standings[league.key]?.groups.orEmpty()
                 groups.forEach { g ->
                     if (groups.size > 1) item(key = "g:" + g.name) { Heading(g.name) }
                     items(g.rows, key = { "t:${g.name}:${it.team.id}" }) { r ->
                         val mine = r.team.id in myTeamIds
                         val ref = teamRefOf(league, r.team)
-                        Box(Modifier.padding(horizontal = 8.dp)) { StandingsLine(r, highlight = mine, star = mine, onClick = ref?.let { { onOpenTeam(it) } }) }
+                        Box(Modifier.padding(horizontal = 8.dp)) { StandingsLine(r, league.sport, highlight = mine, star = mine, onClick = ref?.let { { onOpenTeam(it) } }) }
                     }
                 }
             }
@@ -231,7 +232,7 @@ internal fun SportsLeaguesTab(
                     }
                 }
                 val rows = view.board.rankings[league.key]?.groups?.firstOrNull { it.kind == kind }?.rows.orEmpty()
-                item(key = "rankHead") { RankingHeader(stringResource(pane.label)) }
+                item(key = "rankHead") { RankingHeader(stringResource(pane.label(league.sport))) }
                 items(rows, key = { "r:${it.rank}:${it.team.id}" }) { r -> RankingLine(r, rows.first().points) }
             }
             LeaguePane.RACES -> {
@@ -312,7 +313,8 @@ private fun LeagueCardView(card: LeagueCard, locale: Locale, top: StandingsRow?,
                 Text(stringResource(R.string.sports_next, what), style = stageText(12.5f, 500), color = palette.muted, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 4.dp))
             }
             mine?.let { r ->
-                Text("★ ${r.team.shortName}$sep#${r.rank}$sep${r.points} $pts", style = stageText(12.5f, 700), color = StarYellow, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
+                val figure = if (card.league.sport in LeagueCards.RECORD_SPORTS) "${r.won}–${r.lost}" else "${r.points} $pts"
+                Text("★ ${r.team.shortName}$sep#${r.rank}$sep$figure", style = stageText(12.5f, 700), color = StarYellow, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
             }
         }
     }

@@ -35,10 +35,12 @@ import androidx.compose.ui.unit.em
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import tv.own.owntv.core.sports.FollowedTeam
+import tv.own.owntv.core.sports.LeagueCards
 import tv.own.owntv.core.sports.MatchNotifications
 import tv.own.owntv.core.sports.WatchOption
 import tv.own.owntv.core.sports.model.Match
 import tv.own.owntv.core.sports.model.MatchState
+import tv.own.owntv.core.sports.model.Sport
 import tv.own.owntv.mobile.R
 import tv.own.owntv.mobile.ui.components.MobileIcons
 import tv.own.owntv.mobile.ui.stage.LocalStagePalette
@@ -85,7 +87,7 @@ fun SportsTeamScreen(
     val locale = LocalConfiguration.current.locales[0]
     val context = LocalContext.current
     val team = ref.team
-    val followed = FollowedTeam(ref.league.sport, team.id, team.name, team.abbreviation)
+    val followed = FollowedTeam(ref.league.sport, team.id, team.name, team.abbreviation, ref.league.key)
     val inMyTeams = config.teams.any { it.key == followed.key }
     var resultsTab by rememberSaveable(ref) { mutableStateOf(false) }
     val revealed = remember(ref) { mutableStateListOf<String>() }
@@ -147,7 +149,7 @@ fun SportsTeamScreen(
                         }
                         Box(Modifier.weight(1f))
                         place?.let { r ->
-                            Text("#${r.rank}$sep${r.points} ${stringResource(R.string.sports_table_points)}", style = stageText(13.5f, 700), color = palette.text, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text("#${r.rank}$sep" + if (ref.league.sport in LeagueCards.RECORD_SPORTS) "${r.won}–${r.lost}" else "${r.points} ${stringResource(R.string.sports_table_points)}", style = stageText(13.5f, 700), color = palette.text, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             StageIcon(MobileIcons.KeyboardArrowRight, 16.dp, stageAccent.accent)
                         }
                     }
@@ -157,7 +159,7 @@ fun SportsTeamScreen(
         // --- Fixtures | Results --------------------------------------------------------------------
         item(key = "tabs") {
             Row(Modifier.padding(start = 14.dp, end = 14.dp, top = 12.dp, bottom = 4.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                StageTool(onClick = { resultsTab = false }, label = stringResource(R.string.sports_tab_fixtures), on = !resultsTab)
+                StageTool(onClick = { resultsTab = false }, label = stringResource(if (ref.league.sport == Sport.SOCCER) R.string.sports_tab_fixtures else R.string.sports_tab_games), on = !resultsTab)
                 StageTool(onClick = { resultsTab = true }, label = stringResource(R.string.sports_tab_results), on = resultsTab)
             }
         }
