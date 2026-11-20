@@ -16,6 +16,10 @@
 - **🎓 Sports: college teams and games**
 - **📊 Sports: standings columns per sport, "Standings" and "Games" tabs outside football**
 - **🌍 Ukrainian and Central Kurdish**
+- **🔤 Search and A–Z ignore letter case in every alphabet**
+- **👤 Zoom, text size and recent searches per profile**
+- **📂 Subtitles: "Find in folder", with automatic loading of the matching file**
+- **⏳ "Performing database migration" screen on the first start after an update**
 
 ### 🐛 Fixes
 - **📼 Catch-up: no more stutter after a programme that failed to open**
@@ -26,6 +30,7 @@
 - **🗂️ Favorites and History show their sort as "Newest first", greyed out**
 - **📺 Live TV: a channel that stops playing in the preview says why, instead of freezing on its last picture**
 - **📶 Live TV: after the network drops, a channel comes back by itself once the provider lets go of the old connection**
+- **🔤 Local subtitles: UTF-8 files no longer show Chinese characters**
 
 ## v1.1.2 — 2026-11-09
 

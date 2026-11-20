@@ -406,7 +406,7 @@ connection** so you can prove a key or a self-hosted server works.
 **Where:** the magnifying glass at the top right
 One field over channels, films and shows, grouped with a count for each. Once you type, filter
 chips — **Live TV / TV Shows / Movies / Series** — narrow the results; tap to turn one on or off,
-several at once, none for everything. Recent searches are kept,
+several at once, none for everything. Letter case never matters, in any alphabet. Recent searches are kept per profile,
 and three chips offer **Continue watching**, **Unwatched favourites** and **Channels**.
 **TV Shows** lists programmes from the stored guide whose title matches, on now or within the next 12
 hours, with the channel and time; tap one to open that channel.
@@ -455,7 +455,7 @@ Every gesture above also has a button on the control bar:
 | **Go live** | Back to the live edge |
 | **Volume · Brightness** | Sliders, with a mute row |
 | **Speed** | 0.5× to 2× |
-| **Subtitles · Audio** | Tracks (the language you pick is remembered per channel, film or series), plus subtitle search, subtitle timing and A/V sync. Both are always on the bar — a film with one soundtrack still has A/V sync. Scroll the panel to reach what is below the tracks |
+| **Subtitles · Audio** | Tracks (the language you pick is remembered per channel, film or series), plus subtitle search, a local file, **Find in folder** (a folder chosen once, best match first, optional automatic loading of the one matching file), subtitle timing and A/V sync. Both are always on the bar — a film with one soundtrack still has A/V sync. Scroll the panel to reach what is below the tracks |
 | **Previous · Next** | The episode either side of this one, beside play. Series only |
 | **⏮ · ⏭** | Live: the previous or next channel in the list you are watching, wrapping round at both ends. Shown when the list has two or more channels |
 | **Aspect** | Fit · Fill · Stretch · Original · Force 16:9 · Force 4:3 |
@@ -588,7 +588,7 @@ with its opacity. Real frost needs Android 12+.
 
 ### 🔤 Fonts & size
 **Where:** Settings → Appearance → **Fonts & text size**, **Popup size** and **UI zoom**
-Six font families for the interface and for popups, and interface zoom.
+Six font families for the interface and for popups, and interface zoom. Text size and zoom are kept per profile.
 
 ### 🗂️ Customize
 **Where:** Settings → Content & metadata → **Customize categories & items**
