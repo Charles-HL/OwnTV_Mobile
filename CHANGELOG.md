@@ -13,6 +13,7 @@
 - **🔒 Player screen lock: touches do nothing until you hold "Hold to unlock"**
 - **📄 GPL-3.0 licence file (#78)**
 - **📼 "Prefer HLS for catch-up" on each Xtream playlist**
+- **📼 "Prefer HLS for catch-up" on M3U playlists too: Flussonic catch-up shows its full length and can be sought** (community PR #93 by @Sekator778)
 - **🎓 Sports: college teams and games**
 - **📊 Sports: standings columns per sport, "Standings" and "Games" tabs outside football**
 - **🌍 Ukrainian and Central Kurdish**
@@ -22,6 +23,7 @@
 - **⏳ "Performing database migration" screen on the first start after an update**
 
 ### 🐛 Fixes
+- **📅 Guide: a channel matched by hand gets its programmes and past days even when the downloaded guide is old** (reported in PR #380 by @Sekator778)
 - **📼 Catch-up: no more stutter after a programme that failed to open**
 - **🏒 Sports: "Starting soon" shows today's games after midnight**
 - **🏈 Sports: US team pages list their games, college tables show the real record**

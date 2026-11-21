@@ -160,9 +160,10 @@ A name another playlist already has gets a number, so two unnamed playlists are 
 **My IPTV 2**.
 Under **User-Agent** there is an optional **Referer** — leave it empty unless your provider asks
 for one; it is then sent with every stream of that playlist.
-An Xtream playlist has **Prefer HLS for Live TV** and **Prefer HLS for catch-up**. The catch-up one is off
-by default: many providers serve catch-up only as MPEG-TS, and a programme that will not open as HLS
-is asked for as MPEG-TS by itself.
+An Xtream playlist has **Prefer HLS for Live TV** and **Prefer HLS for catch-up**; an M3U playlist has
+**Prefer HLS for catch-up** too. The catch-up one is off by default: many providers serve catch-up only as
+MPEG-TS, and a programme that will not open as HLS is asked for as MPEG-TS by itself. On an M3U playlist it
+changes only Flussonic catch-up channels: a finished programme then shows its full length and can be sought.
 
 ### 📱 Setting up the television too?
 **Where:** on the **TV** — Settings → Sources & guide → Playlists → Add Source → **Remote**
