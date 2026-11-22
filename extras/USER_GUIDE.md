@@ -460,7 +460,7 @@ Every gesture above also has a button on the control bar:
 | **Subtitles · Audio** | Tracks (the language you pick is remembered per channel, film or series), plus subtitle search, a local file, **Find in folder** (a folder chosen once, best match first, optional automatic loading of the one matching file), subtitle timing and A/V sync. Both are always on the bar — a film with one soundtrack still has A/V sync. Scroll the panel to reach what is below the tracks |
 | **Previous · Next** | The episode either side of this one, beside play. Series only |
 | **⏮ · ⏭** | Live: the previous or next channel in the list you are watching, wrapping round at both ends. Shown when the list has two or more channels |
-| **Aspect** | Fit · Fill · Stretch · Original · Force 16:9 · Force 4:3 |
+| **Aspect** | Fit · Fill · Stretch · Original · Force 16:9 · Force 4:3 · Force 20:9 |
 | **Quality** | Only when the stream offers several picture sizes. Auto, or one size for what is playing now |
 | **Favourite** | Adds what is playing |
 | **Catch-up** | *Go back to…* on archive channels |

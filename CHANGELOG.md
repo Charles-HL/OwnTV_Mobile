@@ -23,8 +23,10 @@
 - **👤 Zoom, text size and recent searches per profile**
 - **📂 Subtitles: "Find in folder", with automatic loading of the matching file**
 - **⏳ "Performing database migration" screen on the first start after an update**
+- **🖥️ Player zoom: Force 20:9 (ahXN00/OwnTV#378)**
 
 ### 🐛 Fixes
+- **🔒 A Merge restore or a sync with the TV no longer removes a category lock**
 - **📅 Guide: a channel matched by hand gets its programmes and past days even when the downloaded guide is old** (reported in PR #380 by @Sekator778)
 - **📼 Catch-up: a channel's past days fill in from the provider's archive when the downloaded guide stopped early**
 - **📼 Catch-up: a programme ExoPlayer could not start no longer puts later catch-up on mpv into software decoding**
