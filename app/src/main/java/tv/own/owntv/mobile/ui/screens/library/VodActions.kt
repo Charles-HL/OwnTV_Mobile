@@ -1,9 +1,9 @@
 package tv.own.owntv.mobile.ui.screens.library
 
+import androidx.core.net.toUri
 import tv.own.owntv.mobile.ui.components.MobileIcons
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
@@ -466,6 +466,6 @@ fun DeleteSubtitlesSheet(
  * one, and it will be better than anything embedded here.
  */
 internal fun Context.playTrailer(key: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=$key"))
+    val intent = Intent(Intent.ACTION_VIEW, "https://www.youtube.com/watch?v=$key".toUri())
     runCatching { startActivity(intent) }
 }

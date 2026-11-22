@@ -1,5 +1,6 @@
 package tv.own.owntv.mobile.ui.components
 
+import tv.own.owntv.mobile.ui.nav.windowHeightDp
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -197,4 +197,4 @@ internal fun jsonList(json: String?): List<String> {
 
 /** Taller than the pickers: this one is for reading, so it takes three quarters of the screen. */
 @Composable
-private fun detailsHeight() = (LocalConfiguration.current.screenHeightDp * 3 / 4).dp
+private fun detailsHeight() = (windowHeightDp() * 3 / 4).dp

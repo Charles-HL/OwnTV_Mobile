@@ -1,5 +1,7 @@
 package tv.own.owntv.mobile.ui.player
 
+import tv.own.owntv.mobile.ui.nav.windowWidthDp
+import tv.own.owntv.mobile.ui.nav.windowHeightDp
 import tv.own.owntv.mobile.ui.stage.stageGlass
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Brush
@@ -470,11 +472,10 @@ private fun ChannelSheet(
     val nowMs by rememberClockTick()
     val sep = stringResource(R.string.content_epg_bits_separator)
     val heading = title?.let { ProviderTags.parse(it).name } ?: stringResource(R.string.content_channel_overlay_title)
-    val configuration = androidx.compose.ui.platform.LocalConfiguration.current
     val body: @Composable (Boolean) -> Unit = { side -> ChannelSheetBody(heading, channels, playing, now, nowMs, sep, side, onTuneToNumber, onPick, onDismiss) }
     // Held sideways: a glass panel down the left of the picture, over a wash from that side, instead of
     // a sheet that would cover the whole short screen.
-    if (configuration.screenWidthDp > configuration.screenHeightDp) {
+    if (windowWidthDp() > windowHeightDp()) {
         androidx.activity.compose.BackHandler(onBack = onDismiss)
         // The panel sits at the start edge, so in right-to-left the wash comes from the right.
         val rtl = androidx.compose.ui.platform.LocalLayoutDirection.current == androidx.compose.ui.unit.LayoutDirection.Rtl

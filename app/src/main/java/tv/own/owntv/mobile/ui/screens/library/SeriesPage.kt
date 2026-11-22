@@ -1,5 +1,6 @@
 package tv.own.owntv.mobile.ui.screens.library
 
+import androidx.compose.ui.platform.LocalResources
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -207,7 +208,7 @@ internal fun SeriesPage(
     val targetProgress = target?.let { episodeProgress[it.id] }
         ?.takeIf { it.positionMs > 0 && it.durationMs > 0 && target.id !in completedIds }
 
-    val resources = LocalContext.current.resources
+    val resources = LocalResources.current
     // The provider's show name often carries its own prefix ("4K-NF - Minerva Academy (2026) (IT)") while the
     // episodes repeat only the plain name ("Minerva Academy - S01E01 - …"), so the plain one is stripped too.
     val plainShow = remember(series.name) { TitleNormalizer.normalize(series.name).query }
