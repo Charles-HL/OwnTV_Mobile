@@ -14,6 +14,7 @@
 - **📄 GPL-3.0 licence file (#78)**
 - **📼 "Prefer HLS for catch-up" on each Xtream playlist**
 - **⏺️ Downloads opens on Recordings (ahXN00/OwnTV#384)**
+- **🖼️ Episode tiles show the provider's own picture of each episode (ahXN00/OwnTV#367)**
 - **📼 "Prefer HLS for catch-up" on M3U playlists too: Flussonic catch-up shows its full length and can be sought** (community PR #93 by @Sekator778)
 - **🎓 Sports: college teams and games**
 - **📊 Sports: standings columns per sport, "Standings" and "Games" tabs outside football**
@@ -29,6 +30,7 @@
 - **📼 Catch-up: a programme ExoPlayer could not start no longer puts later catch-up on mpv into software decoding**
 - **📼 Catch-up: switching a programme from mpv to ExoPlayer starts it at once, in hardware, instead of after 12 seconds in software**
 - **📼 Catch-up: no more stutter after a programme that failed to open**
+- **📅 Guide: the "ids don't match" notice says to use Auto-match EPG, then Match EPG**
 - **🏒 Sports: "Starting soon" shows today's games after midnight**
 - **🏈 Sports: US team pages list their games, college tables show the real record**
 - **🕒 More: the last backup's date in your language**

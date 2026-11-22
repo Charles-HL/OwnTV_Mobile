@@ -190,7 +190,8 @@ top. Predictive back is on.
   work with the app closed (core's `MatchAlertHost.backgroundAllowed`).
 - **Movies & Series** — two tabs with search, sort, Grid | List and **pinch to resize** the
   grid, progress bars on part-watched films and shows, and a detail page with backdrop, chips, resume,
-  favourite, download, season chips and episode progress. The page's title drops a leading provider
+  favourite, download, season chips and episode progress; episode pictures fall back from TMDB's still to the
+  provider's own picture of the episode, then the show's backdrop. The page's title drops a leading provider
   tag such as "|MULTI|".
 - **Guide** — **three shapes the user picks between and the app remembers**: *On now* (the portrait
   default), *Grid* (the landscape and tablet default) and *Timeline*. A phone loads one day, one row

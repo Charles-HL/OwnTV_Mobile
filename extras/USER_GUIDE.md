@@ -376,7 +376,8 @@ bar, in the grid and the list alike; a show carries the bar of its latest part-w
 
 ### ▶️ A film or a show
 Tap for its page: backdrop, cast, chips, **Resume** or **Play**, favourite, download, season chips
-(**Specials** last, when the show has them) and episode progress. A show **opens on the episode you last watched**; one you have not started
+(**Specials** last, when the show has them) and episode progress. Each episode shows TMDB's picture, else the
+provider's own picture of it, else the show's backdrop. A show **opens on the episode you last watched**; one you have not started
 plays from Season 1 Episode 1, with **Specials** after the last season.
 
 Starting something part-watched anywhere else — a **Continue watching** row, the hero card, an
