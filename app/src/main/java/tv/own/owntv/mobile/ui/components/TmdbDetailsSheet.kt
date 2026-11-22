@@ -159,7 +159,7 @@ fun episodeDetails(episode: EpisodeEntity, meta: MetadataCacheEntity?, tmdbWins:
     return MediaDetails(
         title = if (tmdbWins) meta?.title?.takeIf { it.isNotBlank() } ?: fallback else fallback,
         subtitle = stringResource(R.string.content_season_episode, episode.seasonNumber, episode.episodeNumber),
-        backdropUrl = MetadataImages.backdrop(meta?.backdropPath ?: meta?.posterPath),
+        backdropUrl = MetadataImages.backdrop(meta?.backdropPath ?: meta?.posterPath) ?: episode.imageUrl?.takeIf { it.isNotBlank() },
         // The whole day where either side knows it, falling back to the bare year — on a long-running
         // show the year is shared by hundreds of episodes and identifies none of them.
         metaLine = listOfNotNull(
