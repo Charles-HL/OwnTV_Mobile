@@ -75,6 +75,7 @@ import tv.own.owntv.mobile.R
 import tv.own.owntv.mobile.ui.components.MobileBottomSheet
 import tv.own.owntv.mobile.ui.components.SheetScroll
 import tv.own.owntv.mobile.ui.components.sheetListHeight
+import tv.own.owntv.player.LivePreviewEngine
 import tv.own.owntv.player.PlaybackEngine
 import tv.own.owntv.player.StreamInfoRow
 import tv.own.owntv.player.ZoomMode
@@ -358,21 +359,42 @@ private fun AspectSheet(player: PlaybackEngine, onDismiss: () -> Unit) {
     }
 }
 
-/** Auto (Settings → Maximum video quality), then every height this stream offers, highest first. */
+/** Auto, then the live ExoPlayer variants or the available heights for other engines. */
 @Composable
 private fun QualitySheet(player: PlaybackEngine, onDismiss: () -> Unit) {
     val heights by player.videoQualities.collectAsStateWithLifecycle()
     val current by player.videoQualityPick.collectAsStateWithLifecycle()
+    val liveEngine = player as? LivePreviewEngine
+    val variantPick = liveEngine?.videoVariantPick?.collectAsStateWithLifecycle()?.value
+    val variants = liveEngine?.videoVariants?.collectAsStateWithLifecycle()?.value.orEmpty()
     val title = stringResource(R.string.player_tool_quality)
     MobileBottomSheet(onDismissRequest = onDismiss, title = title) {
         StageSheetHeader(title)
         SheetScroll {
-            (listOf<Int?>(null) + heights).forEach { height ->
+            if (liveEngine != null && variants.isNotEmpty()) {
                 StageMenuItem(
-                    if (height == null) stringResource(R.string.settings_auto) else stringResource(R.string.settings_video_quality_lines, height),
-                    onClick = { player.selectVideoQuality(height); onDismiss() },
-                    checked = height == current,
+                    stringResource(R.string.settings_auto),
+                    onClick = { liveEngine.selectVideoVariant(null); onDismiss() },
+                    checked = variantPick == null && current == null,
                 )
+                variants.groupBy { it.height }.forEach { (height, group) ->
+                    val resolution = stringResource(R.string.settings_video_quality_lines, height)
+                    group.forEachIndexed { index, variant ->
+                        StageMenuItem(
+                            if (group.size == 1) resolution else "$resolution · ${index + 1}",
+                            onClick = { liveEngine.selectVideoVariant(variant); onDismiss() },
+                            checked = variant == variantPick,
+                        )
+                    }
+                }
+            } else {
+                (listOf<Int?>(null) + heights).forEach { height ->
+                    StageMenuItem(
+                        if (height == null) stringResource(R.string.settings_auto) else stringResource(R.string.settings_video_quality_lines, height),
+                        onClick = { player.selectVideoQuality(height); onDismiss() },
+                        checked = height == current,
+                    )
+                }
             }
         }
     }

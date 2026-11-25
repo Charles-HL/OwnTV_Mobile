@@ -57,6 +57,7 @@ import tv.own.owntv.mobile.ui.theme.LocalAccentOnVideo
 import tv.own.owntv.mobile.ui.theme.LocalMobileMotion
 import tv.own.owntv.mobile.ui.theme.MobileDimens
 import tv.own.owntv.mobile.ui.theme.SquircleShape
+import tv.own.owntv.player.LivePreviewEngine
 import tv.own.owntv.player.LiveProgramme
 import tv.own.owntv.player.PlaybackEngine
 import tv.own.owntv.player.OwnTVPlayer
@@ -586,6 +587,9 @@ private fun ToolBar(
     val engineName by engine.engineChip.collectAsStateWithLifecycle()
     val qualities by engine.videoQualities.collectAsStateWithLifecycle()
     val qualityPick by engine.videoQualityPick.collectAsStateWithLifecycle()
+    val liveEngine = engine as? LivePreviewEngine
+    val variants = liveEngine?.videoVariants?.collectAsStateWithLifecycle()?.value.orEmpty()
+    val variantPick = liveEngine?.videoVariantPick?.collectAsStateWithLifecycle()?.value
     // The engine chip in the title line is small and easy to miss, so the swap says which engine it
     // landed on — otherwise the only feedback for the button is a picture that blinks.
     val switchedToExo = stringResource(R.string.player_switch_exo)
@@ -708,12 +712,12 @@ private fun ToolBar(
                 onClick = { onOpenSheet(PlayerSheet.ASPECT) },
             )
             // Only when this stream offers several; tinted while a pick overrides Auto.
-            PlayerControl.QUALITY -> if (qualities.isNotEmpty()) {
+            PlayerControl.QUALITY -> if (variants.isNotEmpty() || qualities.isNotEmpty()) {
                 CtrlButton(
                     icon = MobileIcons.VideoLibrary,
                     label = stringResource(R.string.player_tool_quality),
                     onClick = { onOpenSheet(PlayerSheet.QUALITY) },
-                    active = qualityPick != null,
+                    active = variantPick != null || qualityPick != null,
                 )
             }
             // Phone-only today; the television reaches the same list with Left.
