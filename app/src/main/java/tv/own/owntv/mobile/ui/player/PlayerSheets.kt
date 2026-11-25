@@ -381,7 +381,8 @@ private fun QualitySheet(player: PlaybackEngine, onDismiss: () -> Unit) {
                     val resolution = stringResource(R.string.settings_video_quality_lines, height)
                     group.forEachIndexed { index, variant ->
                         StageMenuItem(
-                            if (group.size == 1) resolution else "$resolution · ${index + 1}",
+                            if (group.size == 1) resolution else
+                                stringResource(R.string.player_quality_numbered_variant, resolution, index + 1),
                             onClick = { liveEngine.selectVideoVariant(variant); onDismiss() },
                             checked = variant == variantPick,
                         )
